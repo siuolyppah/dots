@@ -1,5 +1,8 @@
 #!/bin/bash
 
 install() {
-	echo "kitty installed"
+	(
+		set -x
+		cp -r "$DOT_CONF_DIR/kitty" "$HOME/.config/"
+	)
 }

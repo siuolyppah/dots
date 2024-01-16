@@ -1,13 +1,16 @@
 #!/bin/bash
 
-source "$SCRIPT_ROOT"/scripts/tools/install_font.sh
+source "$DOTS_ROOT"/scripts/tools/install_font.sh
 
 install_requirements() {
-	sudo pacman -S --needed \
-		neovim neovide \
-		tree-sitter-cli \
-		xclip wl-clipboard \
-		ripgrep lazygit nodejs
+	(
+		set -x
+		sudo pacman -S --needed \
+			neovim neovide \
+			tree-sitter-cli \
+			xclip wl-clipboard \
+			ripgrep lazygit nodejs
+	)
 }
 
 # clean neovim folders
@@ -40,11 +43,14 @@ backup_old_conf() {
 clone_astronvim_repo() {
 	backup_old_conf
 
-	echo "cloning \"AstroNvim/AstroNvim\""
-	git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-
-	echo "cloning \"siuolyppah/astronvim_config\""
-	git clone https://github.com/siuolyppah/astronvim_config.git ~/.config/nvim/lua/user
+	(
+		set -x
+		git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+	)
+	(
+		set -x
+		git clone --depth 1 https://github.com/siuolyppah/astronvim_config.git ~/.config/nvim/lua/user
+	)
 }
 
 install() {

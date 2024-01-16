@@ -13,7 +13,10 @@ install_nord_fonts() {
 			echo "$font_name installed"
 		else
 			package_name="${font_packages[$font_name]}"
-			sudo pacman -S "$package_name"
+			(
+				set -x
+				sudo pacman -S "$package_name"
+			)
 		fi
 	done
 }

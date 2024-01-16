@@ -1,7 +1,10 @@
 #!/bin/bash
 
-SCRIPT_ROOT=$(dirname "$(readlink -f "$0")")
-export SCRIPT_ROOT
+DOTS_ROOT=$(dirname "$(readlink -f "$0")")
+export DOTS_ROOT
+DOT_CONF_DIR="$DOTS_ROOT/dot-config"
+export DOT_CONF_DIR
+
 source scripts/tools/log.sh
 
 # -s for skip nvim config
@@ -38,7 +41,7 @@ for script_file in $script_files; do
 			install
 			info "configuring $conf_name done!"
 		else
-			error "No install function defined in $script_file, skipped"
+			error "No function named 'install' was found in $script_file. skipped!"
 		fi
 	fi
 
