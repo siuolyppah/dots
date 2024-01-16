@@ -2,31 +2,73 @@
 
 DOTS_ROOT=$(dirname "$(readlink -f "$0")")
 export DOTS_ROOT
+
 DOT_CONF_DIR="$DOTS_ROOT/dot-config"
 export DOT_CONF_DIR
 
+PACMAN_INSTALL="sudo pacman -S --needed"
+export PACMAN_INSTALL
+
+PARU_INSTALL="paru -S --needed"
+export PARU_INSTALL
+
 source scripts/tools/log.sh
 
-# -s for skip nvim config
-skip_nvim=false
-while getopts ":s" opt; do
-	case $opt in
-	s)
-		skip_nvim=true
+default_shell="fish"
+shell=$default_shell
+skip_conf_list=("fisher" "oh-my-zsh") # added later
+
+while [[ $# -gt 0 ]]; do
+	key="$1"
+
+	case $key in
+	--shell)
+		shift
+		shell="$1"
 		;;
-	\?)
-		error "Invalid option: -$OPTARG"
+	--skip)
+		shift
+		while [[ $# -gt 0 && ! $1 == -* ]]; do
+			skip_conf_list+=("$1")
+			shift
+		done
+		continue
+		;;
+	--)
+		shift
+		break
+		;;
+	*)
+		echo "Invalid option: $key"
+		exit 1
 		;;
 	esac
+
+	shift
 done
 
-if [[ "$skip_nvim" == true ]]; then
-	script_files=$(find "scripts/install" -type f -name "*.sh" | grep -v "nvim.sh")
+# filter skipped conf
+script_files=$(find "scripts/install" -type f -name "*.sh")
+# remove skipped conf
+for conf in "${skip_conf_list[@]}"; do
+	script_files=$(echo "$script_files" | grep -v "$conf")
+done
+
+# add fisher or oh-my-zsh conf
+if [[ "$shell" == "fish" ]]; then
+	script_files+=$'\n'"scripts/install/fisher.sh"
+elif [[ "$shell" == "zsh" ]]; then
+	script_files+=$'\n'"scripts/install/oh-my-zsh.sh"
 else
-	script_files=$(find "scripts/install" -type f -name "*.sh")
+	warn "unregonized shell $shell, using default shell \"$default_shell\""
+	shell=$default_shell
 fi
 
-echo "$script_files"
+info "following configuration will be installed:"
+while IFS= read -r line; do
+	echo "$line"
+done <<<"$script_files"
+echo
 
 for script_file in $script_files; do
 	if [[ -f "$script_file" ]]; then
