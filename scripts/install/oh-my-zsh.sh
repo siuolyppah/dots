@@ -6,12 +6,13 @@ install_plugins() {
 	(
 		set -x
 		paru -S --needed \
-			zsh-syntax-highlighting-git \
-			zsh-autosuggestions-git
+			zsh-syntax-highlighting \
+			zsh-autosuggestions
 	)
 }
 
 install() {
+
 	(
 		set -x
 		# ruby: for some plugin functionality
@@ -19,11 +20,9 @@ install() {
 		# bullet-train-oh-my-zsh-theme-git: better powerline theme
 		paru -S --needed \
 			zsh oh-my-zsh-git \
-			ruby \
-			oh-my-zsh-powerline-theme-git \
-			bullet-train-oh-my-zsh-theme-git \
-			zsh-syntax-highlighting-git \
-			zsh-autosuggestions-git
+			ruby
+		# oh-my-zsh-powerline-theme-git \
+		# bullet-train-oh-my-zsh-theme-git
 	)
 
 	# cp "/usr/share/oh-my-zsh/zshrc" "$HOME/.zshrc"
