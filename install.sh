@@ -16,7 +16,8 @@ source scripts/tools/log.sh
 
 default_shell="fish"
 shell=$default_shell
-skip_conf_list=("fisher" "oh-my-zsh") # added later
+default_skip_conf_list=("fisher" "oh-my-zsh") # added later
+skip_conf_list=()
 
 while [[ $# -gt 0 ]]; do
 	key="$1"
@@ -47,6 +48,12 @@ while [[ $# -gt 0 ]]; do
 	shift
 done
 
+script_files=$(find "scripts/install" -type f -name "*.sh")
+# default skipped conf
+for conf in "${default_skip_conf_list[@]}"; do
+	script_files=$(echo "$script_files" | grep -v "$conf")
+done
+
 # add fisher or oh-my-zsh conf
 if [[ "$shell" == "fish" ]]; then
 	script_files+=$'\n'"scripts/install/fisher.sh"
@@ -57,8 +64,6 @@ else
 	shell=$default_shell
 fi
 
-# filter skipped conf
-script_files=$(find "scripts/install" -type f -name "*.sh")
 # remove skipped conf
 for conf in "${skip_conf_list[@]}"; do
 	script_files=$(echo "$script_files" | grep -v "$conf")

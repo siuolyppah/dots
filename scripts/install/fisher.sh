@@ -1,13 +1,18 @@
 #!/bin/bash
 
+source "$DOTS_ROOT"/scripts/tools/cur_shell.sh
+
 install() {
 
 	(
 		set -x
-		"$PACMAN_INSTALL" fish fisher
+		sudo pacman -S --needed \
+			fish fisher
 	)
 
-	current_shell=$(basename "$SHELL")
+	# current_shell=$(basename "$SHELL")
+	current_shell=$(cur_shell_name)
+	echo "shell: $current_shell"
 	if [ "$current_shell" != "fish" ]; then
 		(
 			set -x
@@ -21,6 +26,7 @@ install() {
 	# theme
 	(
 		set -x
+
 		fish -c '
 			fisher install catppuccin/fish
 			fish_config theme save "Catppuccin Mocha"

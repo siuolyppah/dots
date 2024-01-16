@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source "$DOTS_ROOT"/scripts/tools/log.sh
+source "$DOTS_ROOT"/scripts/tools/cur_shell.sh
 
 install_plugins() {
 	(
@@ -31,7 +32,7 @@ install() {
 		cp -r "$DOT_CONF_DIR/oh-my-zsh/.zshrc" "$HOME/.zshrc"
 	)
 
-	current_shell=$(basename "$SHELL")
+	current_shell=$(cur_shell_name)
 	if [ "$current_shell" != "zsh" ]; then
 		(
 			set -x
