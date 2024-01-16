@@ -37,4 +37,6 @@ install() {
 			fisher install franciscolourenco/done
 		'
 	)
+
+	cp -r "$DOT_CONF_DIR/fish/config.fish" "$HOME/.config/fish/config.fish"
 }

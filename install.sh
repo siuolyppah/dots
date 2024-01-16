@@ -47,13 +47,6 @@ while [[ $# -gt 0 ]]; do
 	shift
 done
 
-# filter skipped conf
-script_files=$(find "scripts/install" -type f -name "*.sh")
-# remove skipped conf
-for conf in "${skip_conf_list[@]}"; do
-	script_files=$(echo "$script_files" | grep -v "$conf")
-done
-
 # add fisher or oh-my-zsh conf
 if [[ "$shell" == "fish" ]]; then
 	script_files+=$'\n'"scripts/install/fisher.sh"
@@ -64,11 +57,31 @@ else
 	shell=$default_shell
 fi
 
+# filter skipped conf
+script_files=$(find "scripts/install" -type f -name "*.sh")
+# remove skipped conf
+for conf in "${skip_conf_list[@]}"; do
+	script_files=$(echo "$script_files" | grep -v "$conf")
+done
+
 info "following configuration will be installed:"
 while IFS= read -r line; do
 	echo "$line"
 done <<<"$script_files"
 echo
+
+echo "Continue?"
+while true; do
+	read -p "Y/n: " option
+
+	if [[ $option == "Y" || $option == "y" || $option == "" ]]; then
+		break
+	elif [[ $option == "n" ]]; then
+		exit 0
+	else
+		echo -n "invalid input, please try input "
+	fi
+done
 
 for script_file in $script_files; do
 	if [[ -f "$script_file" ]]; then
