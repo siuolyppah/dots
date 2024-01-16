@@ -4,6 +4,11 @@
 - `nvim`: AstroNvim
 - `oh-my-zsh`
 
+# TODO
+
+- [ ] github hosts settings
+- [ ] Hyprland
+
 # Repo Layout
 
 - `install.sh`: the entry point
