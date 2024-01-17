@@ -12,6 +12,12 @@ export PACMAN_INSTALL
 PARU_INSTALL="paru -S --needed"
 export PARU_INSTALL
 
+IS_NVIDIA=false
+export IS_NVIDIA
+
+IS_THINKPAD=false
+export IS_THINKPAD
+
 source scripts/tools/log.sh
 
 default_shell="fish"
@@ -23,6 +29,10 @@ while [[ $# -gt 0 ]]; do
 	key="$1"
 
 	case $key in
+	--nvidia)
+		shift
+		IS_NVIDIA=true
+		;;
 	--shell)
 		shift
 		shell="$1"
@@ -69,24 +79,31 @@ for conf in "${skip_conf_list[@]}"; do
 	script_files=$(echo "$script_files" | grep -v "$conf")
 done
 
-info "following configuration will be installed:"
-while IFS= read -r line; do
-	echo "$line"
-done <<<"$script_files"
-echo
+confirm_before_install() {
 
-echo "Continue?"
-while true; do
-	read -p "Y/n: " option
+	info "current options: IS_NVIDIA=$IS_NVIDIA"
 
-	if [[ $option == "Y" || $option == "y" || $option == "" ]]; then
-		break
-	elif [[ $option == "n" ]]; then
-		exit 0
-	else
-		echo -n "invalid input, please try input "
-	fi
-done
+	info "following configuration will be installed:"
+	while IFS= read -r line; do
+		echo "$line"
+	done <<<"$script_files"
+	echo
+
+	echo "Continue?"
+	while true; do
+		read -p "Y/n: " option
+
+		if [[ $option == "Y" || $option == "y" || $option == "" ]]; then
+			break
+		elif [[ $option == "n" ]]; then
+			exit 0
+		else
+			echo -n "invalid input, please try input "
+		fi
+	done
+}
+
+confirm_before_install
 
 for script_file in $script_files; do
 	if [[ -f "$script_file" ]]; then

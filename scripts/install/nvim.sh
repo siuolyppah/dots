@@ -5,7 +5,7 @@ source "$DOTS_ROOT"/scripts/tools/install_font.sh
 install_requirements() {
 	(
 		set -x
-		sudo pacman -S --needed \
+		$PACMAN_INSTALL \
 			neovim neovide \
 			tree-sitter-cli \
 			xclip wl-clipboard \

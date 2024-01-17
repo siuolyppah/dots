@@ -15,7 +15,7 @@ install_nord_fonts() {
 			package_name="${font_packages[$font_name]}"
 			(
 				set -x
-			  sudo pacman -S --needed "$package_name"
+				$PACMAN_INSTALL "$package_name"
 			)
 		fi
 	done

@@ -4,7 +4,7 @@ install() {
 
 	(
 		set -x
-		sudo pacman -S --needed kitty
+		$PACMAN_INSTALL kitty
 	)
 
 	(

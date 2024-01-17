@@ -6,7 +6,7 @@ install() {
 
 	(
 		set -x
-		sudo pacman -S --needed \
+		$PACMAN_INSTALL \
 			fish fisher
 	)
 

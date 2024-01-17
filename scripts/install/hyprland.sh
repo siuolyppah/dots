@@ -6,7 +6,7 @@ setup_nvidia() {
 
 	(
 		set -x
-		sudo pacman -S --needed \
+		$PACMAN_INSTALL \
 			nvidia-dkms
 	)
 
@@ -80,8 +80,69 @@ setup_nvidia() {
 	)
 }
 
-install() {
-	# setup_nvidia
+ensure_hypr_tools() {
+	# https://wiki.hyprland.org/Useful-Utilities/Must-have/#pipewire
+	(
+		set -x
+		$PACMAN_INSTALL \
+			pipewire wireplumber
+	)
 
-	warn "unimplmented"
+	# https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
+	(
+		set -x
+		$PACMAN_INSTALL \
+			xdg-desktop-portal-hyprland
+	)
+
+	(
+		set -x
+		$PACMAN_INSTALL \
+			bluez bluez-utils
+	)
+
+	(
+		set -x
+		sudo systemctl start bluetooth.service
+	)
+
+	# for bluetooth music
+	(
+		set -x
+		$PACMAN_INSTALL \
+			pipewire-pulse pavucontrol blueman
+	)
+
+	(
+		set -x
+		$PARU_INSTALL \
+			dunst-git \
+			waybar-git \
+			swaybg-git
+	)
+
+	(
+		set -x
+		$PACMAN_INSTALL rofi
+	)
+
+	(
+		set -x
+		$PACMAN_INSTALL \
+			grim slurp swappy \
+			wf-recorder
+	)
+}
+
+install() {
+	if "$IS_NVIDIA"; then
+		info "setuping NVIDIA"
+		setup_nvidia
+	else
+		info "curruent GPU not NVIDIA, NVIDIA setup skipped"
+	fi
+
+	ensure_hypr_tools
+
+	cp -r "$DOT_CONF_DIR/hypr" "$HOME/.config/hypr"
 }

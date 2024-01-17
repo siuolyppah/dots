@@ -6,7 +6,7 @@ source "$DOTS_ROOT"/scripts/tools/cur_shell.sh
 install_plugins() {
 	(
 		set -x
-		"$PARU_INSTALL" \
+		$PARU_INSTALL \
 			zsh-syntax-highlighting \
 			zsh-autosuggestions
 	)
@@ -19,7 +19,7 @@ install() {
 		# ruby: for some plugin functionality
 		# oh-my-zsh-powerline-theme-git: great theme
 		# bullet-train-oh-my-zsh-theme-git: better powerline theme
-		"$PARU_INSTALL" \
+		$PARU_INSTALL \
 			zsh oh-my-zsh-git \
 			ruby
 		# oh-my-zsh-powerline-theme-git \
