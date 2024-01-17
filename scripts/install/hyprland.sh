@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source "$DOTS_ROOT"/scripts/tools/log.sh
+source "$DOTS_ROOT"/scripts/tools/install_font.sh
 
 setup_nvidia() {
 
@@ -84,8 +85,8 @@ ensure_hypr_tools() {
 
 	(
 		set -x
-		$PACMAN_INSTALL \
-			hyprland
+		$PARU_INSTALL \
+			hyprland-git
 	)
 
 	# https://wiki.hyprland.org/Useful-Utilities/Must-have/#pipewire
@@ -149,7 +150,9 @@ install() {
 		info "curruent GPU not NVIDIA, NVIDIA setup skipped"
 	fi
 
+	install_nord_fonts
+
 	ensure_hypr_tools
 
-	cp -r "$DOT_CONF_DIR/hypr" "$HOME/.config/hypr"
+	cp -r "$DOT_CONF_DIR/hypr" "$HOME/.config/"
 }

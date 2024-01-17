@@ -6,6 +6,8 @@ install_nord_fonts() {
 		["0xProto Nerd Font"]="ttf-0xproto-nerd"                # below for nvim
 		["Agave Nerd Font"]="ttf-agave-nerd"
 		["3270 Nerd Font"]="ttf-3270-nerd"
+		["Iosevka Nerd Font"]="ttf-iosevka-nerd"
+		["Font Awesome"]="ttf-font-awesome"
 	)
 
 	for font_name in "${!font_packages[@]}"; do
