@@ -81,6 +81,13 @@ setup_nvidia() {
 }
 
 ensure_hypr_tools() {
+
+	(
+		set -x
+		$PACMAN_INSTALL \
+			hyprland
+	)
+
 	# https://wiki.hyprland.org/Useful-Utilities/Must-have/#pipewire
 	(
 		set -x

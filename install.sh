@@ -6,10 +6,10 @@ export DOTS_ROOT
 DOT_CONF_DIR="$DOTS_ROOT/dot-config"
 export DOT_CONF_DIR
 
-PACMAN_INSTALL="sudo pacman -S --needed"
+PACMAN_INSTALL="sudo pacman -S --needed --noconfirm"
 export PACMAN_INSTALL
 
-PARU_INSTALL="paru -S --needed"
+PARU_INSTALL="paru -S --needed --noconfirm"
 export PARU_INSTALL
 
 IS_NVIDIA=false
