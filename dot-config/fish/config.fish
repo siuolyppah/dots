@@ -3,7 +3,6 @@ if status is-interactive
   alias se="EDITOR=nvim sudoedit"
   alias lg="lazygit"
 
-  fish_config theme save "Catppuccin Mocha"
 end
 
 
