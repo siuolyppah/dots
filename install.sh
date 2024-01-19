@@ -36,6 +36,7 @@ while [[ $# -gt 0 ]]; do
 	--shell)
 		shift
 		shell="$1"
+		shift
 		;;
 	--skip)
 		shift
@@ -43,19 +44,12 @@ while [[ $# -gt 0 ]]; do
 			skip_conf_list+=("$1")
 			shift
 		done
-		continue
-		;;
-	--)
-		shift
-		break
 		;;
 	*)
 		echo "Invalid option: $key"
 		exit 1
 		;;
 	esac
-
-	shift
 done
 
 script_files=$(find "scripts/install" -type f -name "*.sh")
