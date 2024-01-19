@@ -41,6 +41,7 @@ install() {
 		fish -c '
 			fisher install jethrokuan/z
 			fisher install franciscolourenco/done
+			fisher install gazorby/fish-abbreviation-tips
 		'
 	)
 
