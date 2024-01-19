@@ -99,6 +99,11 @@ confirm_before_install() {
 
 confirm_before_install
 
+(
+	set -x
+	paru -Syyu
+)
+
 for script_file in $script_files; do
 	if [[ -f "$script_file" ]]; then
 		unset install
