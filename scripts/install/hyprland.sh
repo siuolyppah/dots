@@ -79,6 +79,23 @@ setup_nvidia() {
 			fi
 		fi
 	)
+
+	(
+		set -x
+		$PACMAN_INSTALL qt5-wayland qt5ct libva
+	)
+
+	(
+		set -x
+		$PARU_INSTALL libva-nvidia-driver-git
+	)
+
+	(
+		set -x
+		sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
+	)
+	# TODO:
+	# 1. Add nvidia.NVreg_PreserveVideoMemoryAllocations=1 to your kernel parameters if you don’t have it already.
 }
 
 ensure_hypr_tools() {
@@ -99,8 +116,9 @@ ensure_hypr_tools() {
 	# https://wiki.hyprland.org/Useful-Utilities/Hyprland-desktop-portal/
 	(
 		set -x
-		$PACMAN_INSTALL \
-			xdg-desktop-portal-hyprland
+		$PARU_INSTALL \
+			xdg-desktop-portal-hyprland \
+			xdg-desktop-portal-gtk
 	)
 
 	(
