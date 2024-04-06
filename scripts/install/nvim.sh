@@ -45,11 +45,7 @@ clone_astronvim_repo() {
 
 	(
 		set -x
-		git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-	)
-	(
-		set -x
-		git clone --depth 1 git@github.com:siuolyppah/astronvim_config.git ~/.config/nvim/lua/user
+		git clone git@github.com:siuolyppah/astronvim_config_v4.git ~/.config/nvim
 	)
 }
 
